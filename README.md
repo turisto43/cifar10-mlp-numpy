@@ -20,15 +20,7 @@ pip install numpy matplotlib tqdm
 可直接克隆项目内的数据集
 或浏览器直接下载：
 https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
-解压后目录结构应为
-project/
-├─ cifar10/
-│  ├─ data_batch_1~5
-│  ├─ test_batch
-│  └─ ...
-├─ main.py
-├─ search.py
-└─ weights_visual.py
+解压后以本项目结构存储
 
 ```
 /fashion-mnist/
