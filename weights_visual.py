@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 加载npz文件
-data = np.load('3072_32_0.01_0.01_best_weights.npz')
+data = np.load('512_256_0.01_0.1_best_weights.npz')
 
 # 提取权重参数数组
 loaded_weights = [data['arr_0'], data['arr_1'], data['arr_2']]

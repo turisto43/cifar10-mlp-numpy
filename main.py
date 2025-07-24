@@ -8,9 +8,9 @@ from codes.testor import test_my_model
 
 # 定义网络结构
 settings = [
-    {"input_dim": 3072, "out_put_dim": 768, "activation": "relu"},
-    {"input_dim": 768, "out_put_dim": 384,  "activation": "relu"},
-    {"input_dim": 384,  "out_put_dim": 10,   "activation": "softmax"}
+    {"input_dim": 3072, "out_put_dim": 512, "activation": "relu"},
+    {"input_dim": 512, "out_put_dim": 256,  "activation": "relu"},
+    {"input_dim": 256,  "out_put_dim": 10,   "activation": "softmax"}
 ]
 nn, activation_functions = neural_network(settings)
 
@@ -22,7 +22,7 @@ print("数据读取完毕")
 # 训练
 train_result = train_my_network(nn, activation_function_settings=activation_functions, x_train_batches=sample_batches[0][0],
                  y_train_batches=sample_batches[0][1], x_vali_batches=sample_batches[1][0],
-                 y_vali_batches=sample_batches[1][1], l2_lambda=0.1, epochs=100, learning_rate=0.005,
+                 y_vali_batches=sample_batches[1][1], l2_lambda=0.1, epochs=100, learning_rate=0.01,
                  learning_decay_rate=0.001, learning_rate_decay_steps=50, save_best_model=True)
 print("训练完毕")
 loss_all, accuracy_vali_all, best_val_loss, best_weights = train_result[0], train_result[1], train_result[2], train_result[3]

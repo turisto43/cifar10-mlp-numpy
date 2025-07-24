@@ -5,9 +5,20 @@ from codes.dataloader import get_data_cifar10
 from codes.draw_my_plots import draw_pic_accuracy, draw_pic_loss
 from codes.testor import test_my_model
 
+# 1. 在 import 区域后加两行
+import os
+os.makedirs("pictures", exist_ok=True)
+os.makedirs("weights", exist_ok=True)
+finished = set()                       # 用 set 去重最快
+if os.path.exists("record.txt"):
+    with open("record.txt", "r", encoding="utf-8") as f:
+        for line in f:
+            # 每行格式：512_256_0.01_0.01_在测试集上的准确度为：0.4321
+            key = line.split("_")[0] + "_" + line.split("_")[1] + "_" + \
+                  line.split("_")[2] + "_" + line.split("_")[3]
+            finished.add(key)
 
 # 读取batch后的数据集 形式为[[x_train_batch, y_train_batch], [x_vali_batch, y_vali_batch], [x_test_batch, y_test_batch]]
-path = "./fashion_mnist"
 sample_batches = get_data_cifar10("./cifar-10-batches-py", val_split_ratio=0.1, batch_size=32)
 print("数据读取完毕")
 
@@ -41,19 +52,19 @@ for dim_1 in hidden_dims_1:
                 loss_all, accuracy_vali_all, best_val_loss, best_weights = train_result[0], train_result[1], train_result[2], train_result[3]
 
                 # 绘制loss图像和accuracy
-                draw_pic_loss(loss_all, f"./存储图片/{dim_1}_{dim_2}_{learning_rate}_{l2}_loss_plot.png")
-                draw_pic_accuracy(accuracy_vali_all, f"./存储图片/{dim_1}_{dim_2}_{learning_rate}_{l2}_vali_accuracy.png")
+                draw_pic_loss(loss_all, f"./pictures/{dim_1}_{dim_2}_{learning_rate}_{l2}_loss_plot.png")
+                draw_pic_accuracy(accuracy_vali_all, f"./pictures/{dim_1}_{dim_2}_{learning_rate}_{l2}_vali_accuracy.png")
 
                 # 保存权重到本地文件
-                np.savez(f'./存储权重/{dim_1}_{dim_2}_{learning_rate}_{l2}_best_weights.npz', *best_weights)
+                np.savez(f'./weights/{dim_1}_{dim_2}_{learning_rate}_{l2}_best_weights.npz', *best_weights)
                 print(f"{dim_1}_{dim_2}_{learning_rate}_{l2}_best_val_loss: ", best_val_loss)
 
                 # 测试
                 # 加载本地文件中的权重
-                data = np.load(f'./存储权重/{dim_1}_{dim_2}_{learning_rate}_{l2}_best_weights.npz')
+                data = np.load(f'./weights/{dim_1}_{dim_2}_{learning_rate}_{l2}_best_weights.npz')
                 loaded_weights = [data['arr_0'], data['arr_1'], data['arr_2']]  # 第一层的权重
                 test_accuracy = test_my_model(loaded_weights, activation_functions, x_test_batches=sample_batches[2][0],
                                                               y_test_batches=sample_batches[2][1])
                 print(f"{dim_1}_{dim_2}_{learning_rate}_{l2}_在测试集上的准确度为：", test_accuracy)
-                with open("结果记录.txt", "a+", encoding="utf-8") as f:
+                with open("record.txt", "a+", encoding="utf-8") as f:
                     f.write(f"{dim_1}_{dim_2}_{learning_rate}_{l2}_在测试集上的准确度为：" + str(test_accuracy) + "\n")
