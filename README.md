@@ -15,7 +15,7 @@
 ```bash
 pip install numpy matplotlib tqdm
 ```
-请注意最新numpy可能会报错，请回退numpy版本
+请注意最新numpy可能会报错，请回退numpy版本，numpy==1.26.4是可行的。
 ### 数据准备
 可直接克隆项目内的数据集
 或浏览器直接下载：
