@@ -28,7 +28,7 @@ https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz
 
 ### 训练模型
 
-1. 打开 `main.py`，根据需求调整网络设置和 `train_my_network()` 函数的参数。（参数可通过search查找，我找到的{dim_1}_{dim_2}_{learning_rate}_{l2}为512_256_0.01_0.1）
+1. 打开 `main.py`，根据需求调整网络设置和 `train_my_network()` 函数的参数。（参数可通过search查找，但是训练量比较大）
 2. 执行以下命令以启动训练：
 
 ```bash
